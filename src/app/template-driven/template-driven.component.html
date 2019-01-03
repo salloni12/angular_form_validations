@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="jumbotron">
+
+    <form #frm="ngForm" (ngsubmit)="adduser(frm)">
+      <div class="form-group">
+        <label for="name">
+          Name:
+        </label>
+        <input type="text" name="name" class="form-control" [(ngModel)]="name" #nameUser=ngModel pattern="[a-zA-Z ][a-zA-Z ]+" required>
+      </div>
+
+      <div *ngIf="nameUser?.touched" class="alert alert-danger">
+        <div *ngIf="nameUser.errors?.required">
+          Name is Required!
+        </div>
+        <div *ngIf="nameUser.errors?.pattern">
+          Name is invalid!
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="contact">
+          Contact:
+        </label>
+        <input type="text" name="contact" class="form-control" [(ngModel)]="contact" #contactUser=ngModel minlength="10" maxlength="10"
+          pattern="[0-9]*" required>
+      </div>
+
+
+
+      <div *ngIf="contactUser?.touched" class="alert alert-danger">
+        <div *ngIf="contactUser.errors?.required">
+          contact number is Required!
+        </div>
+        <div *ngIf="contactUser.errors?.pattern ||contactUser.errors?.minlength">
+          invalid contact !
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="email">
+          Email Id:
+        </label>
+        <input type="text" name="email" class="form-control" [(ngModel)]="email" #emailUser=ngModel required>
+      </div>
+
+
+      <div *ngIf="emailUser?.touched" class="alert alert-danger">
+        <div *ngIf="emailUser.errors?.required">
+          emailid is Required
+        </div>
+      </div>
+
+
+
+      <button type="submit" name="button" class="btn btn-success" [disabled]="frm.invalid">ADD User</button>
+    </form>
+
+  </div>
+</div>
+
+
+
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let user of userList">
+    {{user?.name}}
+    <br> {{user?.contact}}
+    <br> {{user?.email}}
+  </li>
+</ul>
+
+{{frm.value | json}}
